@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MEDLINKZ — Website Categories</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#06b6d4;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071026 0%, #07132a 60%);
+      color:#e6eef6;
+      min-height:100vh;
+      padding:28px;
+      -webkit-font-smoothing:antialiased;
+    }
+    header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:20px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;
+      height:56px;
+      background:linear-gradient(135deg,var(--accent), #7c3aed);
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:#021124;
+      font-size:16px;
+      box-shadow:0 6px 18px rgba(6,182,212,0.12);
+    }
+    h1{margin:0;font-size:20px;letter-spacing:0.2px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:10px;align-items:center}
+    input.search{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.04);
+      color:inherit;
+      padding:10px 12px;
+      border-radius:10px;
+      min-width:220px;
+      outline:none;
+    }
+    button.btn{
+      background:var(--accent);
+      color:#021124;
+      border:none;
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(6,182,212,0.12);
+    }
+    main{display:grid;grid-template-columns: 1fr 360px; gap:20px; align-items:start}
+    @media (max-width:900px){
+      main{grid-template-columns:1fr; padding-bottom:40px}
+      .sidebar{order:2}
+    }
+    .grid{
+      display:grid;
+      gap:14px;
+      grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      border-radius:12px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card h3{margin:0 0 8px 0;font-size:15px}
+    ul.links{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+    li.linkRow{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      background:rgba(255,255,255,0.01);
+      padding:8px;
+      border-radius:8px;
+      font-size:14px;
+    }
+    .linkLeft{display:flex;gap:8px;align-items:center;overflow:hidden}
+    .favicon{width:36px;height:36px;border-radius:6px;display:grid;place-items:center;background:rgba(255,255,255,0.03);flex-shrink:0}
+    .title{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:160px}
+    .linkActions{display:flex;gap:6px;align-items:center}
+    .iconBtn{
+      padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer;font-size:13px;color:var(--muted)
+    }
+    .small{font-size:12px;color:var(--muted)}
+    .sidebar{
+      position:relative;
+      background:var(--card);
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      height:fit-content;
+    }
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    .formRow{display:flex;gap:8px;margin-bottom:8px}
+    input, select{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;outline:none;width:100%}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    .empty{color:var(--muted);padding:18px;border-radius:10px;text-align:center;background:rgba(255,255,255,0.01)}
+    .tag{font-size:12px;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:999px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">MED<br>LINKZ</div>
+      <div>
+        <h1>MEDLINKZ</h1>
+        <p class="lead">A simple directory of useful sites — video, education, gaming, tools and more.</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input id="search" class="search" placeholder="Search site name or URL..." aria-label="Search links" />
+      <button id="resetBtn" class="btn" title="Reset sample links">Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+        <div class="tag">Categories</div>
+        <div class="small">Click a category to filter</div>
+      </div>
+
+      <div id="categoriesGrid" class="grid" aria-live="polite">
+        <!-- Category cards inserted by JS -->
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="card">
+          <h3>All links</h3>
+          <div id="allLinks" class="grid" style="grid-template-columns:1fr"></div>
+          <div id="noResults" class="empty" style="display:none">No links match your search or filter.</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <strong>Add / Save Link</strong>
+        <span class="small">Saved locally</span>
+        <button id="exportJSON" class="btn">Export JSON</button>
+<button id="exportCSV" class="btn">Export CSV</button>
+        
+      </div>
+
+      <div>
+        <label for="siteName">Site name</label>
+        <input id="siteName" placeholder="E.g. YouTube" />
+
+        <label for="siteUrl" style="margin-top:8px">Site URL</label>
+        <input id="siteUrl" placeholder="https://example.com" />
+
+        <label for="siteCat" style="margin-top:8px">Category</label>
+        <select id="siteCat">
+          <option>Video Streaming</option>
+          <option>Education</option>
+          <option>Gaming</option>
+          <option>News</option>
+          <option>Social</option>
+          <option>Tools</option>
+          <option>Other</option>
+        </select>
+
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button id="addBtn" class="btn">Add link</button>
+          <button id="clearAll" class="iconBtn" title="Clear all saved links">Clear</button>
+        </div>
+
+        <hr style="margin:12px 0; border-color: rgba(255,255,255,0.03)" />
+
+        <div class="small">Tips</div>
+        <ul style="padding-left:18px;margin-top:6px;color:var(--muted);font-size:13px">
+          <li>Click a category card to filter.</li>
+          <li>Use search to quickly find a site.</li>
+          <li>Links you add are stored in your browser (localStorage).</li>
+        </ul>
+
+        <footer>
+          <div style="margin-top:10px" class="small">Made with ♥ — MEDLINKZ</div>
+        </footer>
+      </div>
+    </aside>
+  </main>
+  
+  <script>
+  function generateFavicon(url) {
+  try {
+    const domain = new URL(url).origin;
+    return `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+  } catch (e) {
+    return "https://www.google.com/s2/favicons?sz=64&domain=example.com";
+  }
+}
+  
+ 
+const SAMPLE = [
+  // Video
+  {name:'YouTube', url:'https://www.youtube.com', cat:'Video Streaming'},
+  {name:'Netflix', url:'https://www.netflix.com', cat:'Video Streaming'},
+  {name:'TikTok', url:'https://www.tiktok.com', cat:'Video Streaming'},
+  // Education
+  {name:'Khan Academy', url:'https://www.khanacademy.org', cat:'Education'},
+  {name:'Udemy', url:'https://www.udemy.com', cat:'Education'},
+  {name:'Coursera', url:'https://www.coursera.org', cat:'Education'},
+  // Gaming
+  {name:'Steam', url:'https://store.steampowered.com', cat:'Gaming'},
+  {name:'Epic Games', url:'https://www.epicgames.com', cat:'Gaming'},
+  {name:'Roblox', url:'https://www.roblox.com', cat:'Gaming'},
+  // Social Media
+  {name:'X (Twitter)', url:'https://twitter.com', cat:'Social'},
+  {name:'Instagram', url:'https://www.instagram.com', cat:'Social'},
+  {name:'Snapchat', url:'https://www.snapchat.com', cat:'Social'},
+  // AI Tools
+  {name:'ChatGPT', url:'https://chat.openai.com', cat:'AI Tools'},
+  {name:'Perplexity', url:'https://www.perplexity.ai', cat:'AI Tools'},
+  {name:'Claude AI', url:'https://claude.ai', cat:'AI Tools'},
+  // Music
+  {name:'Spotify', url:'https://www.spotify.com', cat:'Music'},
+  {name:'Apple Music', url:'https://music.apple.com', cat:'Music'},
+  {name:'Audiomack', url:'https://audiomack.com', cat:'Music'},
+  // Tools
+  {name:'Google Drive', url:'https://drive.google.com', cat:'Tools'},
+  {name:'Canva', url:'https://www.canva.com', cat:'Tools'},
+  {name:'Notion', url:'https://www.notion.so', cat:'Tools'},
+];
+    // Utilities
+    const $ = id => document.getElementById(id);
+
+    // Load or initialize data
+    function loadData(){
+      const raw = localStorage.getItem('medlinkz_links_v1');
+      if(!raw) {
+        localStorage.setItem('medlinkz_links_v1', JSON.stringify(SAMPLE));
+        return SAMPLE.slice();
+      }
+      try{
+        const parsed = JSON.parse(raw);
+        if(!Array.isArray(parsed) || parsed.length === 0) {
+          // fallback to SAMPLE if empty
+          return SAMPLE.slice();
+        }
+        return parsed;
+      }catch(e){
+        localStorage.setItem('medlinkz_links_v1', JSON.stringify(SAMPLE));
+        return SAMPLE.slice();
+      }
+    }
+
+    let links = loadData();
+    let activeCategory = null;
+
+    // Render category cards
+    function categoriesFromLinks(arr){
+      const map = {};
+      arr.forEach(l => {
+        map[l.cat] = map[l.cat] || {count:0, emoji:l.emoji || '🔗'};
+        map[l.cat].count++;
+      });
+      return Object.keys(map).sort().map(k => ({name:k, count:map[k].count, emoji:map[k].emoji}));
+    }
+
+    function renderCategories(){
+      const cats = categoriesFromLinks(links);
+      const grid = document.getElementById('categoriesGrid');
+      grid.innerHTML = '';
+      if(cats.length === 0){
+        grid.innerHTML = '<div class="card empty">No categories yet. Add a link.</div>';
+        return;
+      }
+      cats.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="margin:0">${c.emoji} ${c.name}</h3>
+            <div class="small">${c.count}</div>
+          </div>
+          <div class="small" style="margin-top:8px;color:var(--muted)">Click to filter sites in ${c.name}.</div>
+        `;
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', ()=> {
+          if(activeCategory === c.name) {
+            activeCategory = null;
+          } else {
+            activeCategory = c.name;
+          }
+          renderAllLinks();
+          highlightSelectedCategory();
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function highlightSelectedCategory(){
+      const cards = document.querySelectorAll('#categoriesGrid .card');
+      cards.forEach(card => {
+        if(!activeCategory){
+          card.style.outline='none';
+          card.style.boxShadow='none';
+        } else {
+          const heading = card.querySelector('h3').textContent;
+          if(heading.includes(activeCategory)) {
+            card.style.boxShadow='0 6px 26px rgba(6,182,212,0.08)';
+            card.style.outline = '1px solid rgba(6,182,212,0.12)';
+          } else {
+            card.style.boxShadow='none';
+            card.style.outline='none';
+          }
+        }
+      });
+    }
+
+    function renderAllLinks(){
+      const container = $('allLinks');
+      const q = $('search').value.trim().toLowerCase();
+      const filtered = links.filter(l => {
+        const matchQ = q === '' || l.name.toLowerCase().includes(q) || l.url.toLowerCase().includes(q) || l.cat.toLowerCase().includes(q);
+        const matchCat = !activeCategory || l.cat === activeCategory;
+        return matchQ && matchCat;
+      });
+
+      container.innerHTML = '';
+      if(filtered.length === 0){
+        $('noResults').style.display = 'block';
+        return;
+      } else {
+        $('noResults').style.display = 'none';
+      }
+
+      filtered.forEach(item => {
+        const li = document.createElement('div');
+        li.className = 'card';
+        li.innerHTML = `
+          <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+            <div style="display:flex;gap:10px;align-items:center;overflow:hidden">
+              <div class="favicon">${item.emoji || '🔗'}</div>
+              <div style="min-width:0">
+                <div class="title">${item.name}</div>
+                <div class="small" style="color:var(--muted)">${item.url}</div>
+              </div>
+            </div>
+
+            <div class="linkActions">
+              <button class="iconBtn" title="Open link" data-url="${item.url}">Open</button>
+              <button class="iconBtn" title="Copy URL" data-copy="${item.url}">Copy</button>
+              <button class="iconBtn" title="Remove link" data-remove="${item.url}">Remove</button>
+            </div>
+          </div>
+        `;
+
+        // events
+        li.querySelector('[data-url]')?.addEventListener('click', (e)=>{
+          window.open(item.url, '_blank', 'noopener');
+        });
+        li.querySelector('[data-copy]')?.addEventListener('click', async (e)=>{
+          try{
+            await navigator.clipboard.writeText(item.url);
+            e.target.textContent = 'Copied ✓';
+            setTimeout(()=> e.target.textContent = 'Copy', 1200);
+          }catch(err){
+            alert('Could not copy. You can manually select the URL and copy it.');
+          }
+        });
+        li.querySelector('[data-remove]')?.addEventListener('click', (e)=>{
+          if(!confirm(`Remove "${item.name}"?`)) return;
+          links = links.filter(x => x.url !== item.url);
+          saveLinks();
+          renderCategories();
+          renderAllLinks();
+        });
+
+        container.appendChild(li);
+      });
+    }
+
+    function saveLinks(){
+      localStorage.setItem('medlinkz_links_v1', JSON.stringify(links));
+    }
+
+    // wire up controls
+    $('search').addEventListener('input', ()=> renderAllLinks());
+
+    $('addBtn').addEventListener('click', ()=>{
+      const name = $('siteName').value.trim();
+      let url = $('siteUrl').value.trim();
+      const cat = $('siteCat').value;
+      if(!name || !url) {
+        alert('Please enter site name and URL.');
+        return;
+      }
+      // normalize URL
+      if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      // prevent duplicates
+      if(links.find(l => l.url === url)){
+        alert('This URL already exists in your list.');
+        return;
+      }
+      const emoji = guessEmojiForCategory(cat);
+      links.unshift({name, url, cat, emoji});
+      saveLinks();
+      $('siteName').value = '';
+      $('siteUrl').value = '';
+      renderCategories();
+      renderAllLinks();
+    });
+
+    $('clearAll').addEventListener('click', ()=>{
+      if(!confirm('Clear ALL saved links and reset to default sample?')) return;
+      localStorage.removeItem('medlinkz_links_v1');
+      links = loadData();
+      activeCategory = null;
+      renderCategories();
+      renderAllLinks();
+    });
+
+    $('resetBtn').addEventListener('click', ()=>{
+      if(!confirm('Reset to the original sample links? This will overwrite your saved list.')) return;
+      localStorage.setItem('medlinkz_links_v1', JSON.stringify(SAMPLE));
+      links = loadData();
+      activeCategory = null;
+      renderCategories();
+      renderAllLinks();
+    });
+
+    function guessEmojiForCategory(cat){
+      switch(cat){
+        case 'Video Streaming': return '📺';
+        case 'Education': return '📚';
+        case 'Gaming': return '🎮';
+        case 'News': return '📰';
+        case 'Social': return '💬';
+        case 'Tools': return '🛠️';
+        default: return '🔗';
+      }
+    }
+  function generateFavicon(url) {
+  try {
+    const domain = new URL(url).origin;
+    return `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+  } catch (e) {
+    return "https://www.google.com/s2/favicons?sz=64&domain=example.com";
+  }
+}
+
+    // initial render
+    renderCategories();
+    renderAllLinks();
+
+    // keyboard shortcut: Ctrl+K to focus search
+    window.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault(); $('search').focus();
+      }
+    });
+  function downloadFile(filename, content) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([content], { type: "text/plain" }));
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+$('exportJSON').addEventListener('click', ()=> {
+  downloadFile("medlinkz-backup.json", JSON.stringify(links, null, 2));
+});
+
+$('exportCSV').addEventListener('click', ()=> {
+  let csv = "name,url,category\n";
+  links.forEach(l => {
+    csv += `"${l.name}","${l.url}","${l.cat}"\n`;
+  });
+  downloadFile("medlinkz-backup.csv", csv);
+});
+
+  </script>
+</body>
+</html>
