@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Facebook login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+    *{
+  margin:0;
+  padding:0;
+}
+body{
+  height:100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(222,220,224);
+}
+.cointainer{
+  margin: 10px 20px;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
+}
+.rightpart{
+  width:40%;
+}
+h1{
+  color:royalblue;
+  font-size:80px;
+   justify-content:center;
+}
+h3{
+  color:black;
+}
+.middlepart{
+  width:50%;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+}
+.loginpage{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  background-color:#fff;
+  width:450px;
+  height:600px;
+  box-shadow:-10px -10px 15px rgba(0,0,0.1),
+  10px 10px 15px rgba(0,0,0.1);
+}
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:15px 0px;
+  width:80%
+}
+input{
+  width:90%;
+  height:50px;
+  margin:10px 0px;
+  padding:0px 0px;
+  outline:none;
+  border:1px solid #ccc;
+  font-size:18px;
+  border-radius:10px;
+}
+input[type="submit"]{
+  background-color: royalblue;
+  color:white;
+  width:105px;
+}
+p{
+  color:royalblue;
+}
+hr{
+  border:1px solid #ccc;
+  width:320px;
+  margin:20px 0px; 
+}
+.createaccount{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  background-color:green;
+  width:250 px;
+  height:50 px;
+  font-size:18px;
+  font-weight:30px;
+  color:white;
+}
+span{
+  margin:20px 0px;
+  font-size: 18px;
+  font-weight: 20px;
+   justify-content:bottom;
+}
+ .link{
+   background: royalblue;
+  color:white;
+  width:30%;
+   padding:10px;
+   
+ }
+    button{
+     bodder-radius:10px;
+    }
+    </style>
+    
+    
+    
+  </head>
+  <body>
+      <h1 class="title">MEDLINKZ</h1>
+      <script src="script.js"></script>
+  </body>
+  <body>
+    <div class="cointainer">
+      <div class="rightpart">
+        <h3>
+          <pre>
+Medlinkz helps you 
+to get access to
+a wide range of websites
+that are tailored 
+base on the desire
+of the user.
+Medlinkz provide 
+websites on sports,
+video streaming sites,
+gaming ,educational 
+and etc.
+      
+          </pre>
+        </h3>
+      </div>
+      <div class="leftpart">
+        <div class="loginpage">
+          <form>
+            <input type="text" placeholder="first name" required>
+            <input type="text" placeholder="other name">
+            <input type="date" placeholder="date of birth">
+            <input type="text"placeholder="email or phone number">
+            <input type="password" placeholder="password">
+            <button class="link" ><a href="medlinkz login.html">LOGIN</a></button>
+          </form>
+          <p>Forgot Password ?</p>
+          <hr>
+
+      </div>
+        <hr>
+        <span>Login to experience tje ultimate servive of medlinkz to browse the intermet with ease</span>
+    </div>
+      <script>
+      function showTime() {
+	document.getElementById('currentTime').innerHTML = new Date().toUTCString();
+}
+showTime();
+setInterval(function () {
+	showTime();
+}, 1000);
+      
+      </script>   
+      
+      
+  </body>
+</html>
+
